@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Lazy Cadre – BCS LMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #0a1628;
+  --navy2:  #0f2040;
+  --navy3:  #1a3560;
+  --gold:   #c9a84c;
+  --gold2:  #e8c96a;
+  --gold3:  #f5e0a0;
+  --cream:  #faf8f2;
+  --white:  #ffffff;
+  --text:   #0a1628;
+  --muted:  #5a6a85;
+  --border: #ddd8c4;
+  --success:#1a7a4a;
+  --radius: 12px;
+  --fh: 'Playfair Display', serif;
+  --fb: 'DM Sans', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--fb);background:var(--cream);color:var(--text);min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+
+/* ── NAV ── */
+nav{background:var(--navy);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:200;box-shadow:0 2px 24px rgba(0,0,0,.35);}
+.nav-brand{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.nav-brand .logo{font-family:var(--fh);color:var(--gold);font-size:1.25rem;line-height:1;}
+.nav-brand .tagline{color:rgba(255,255,255,.45);font-size:.72rem;letter-spacing:.8px;margin-top:2px;}
+.nav-links{display:flex;gap:1.2rem;align-items:center;}
+.nav-links a{color:rgba(255,255,255,.65);font-size:.88rem;cursor:pointer;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.btn-google{background:var(--gold);color:var(--navy);border:none;padding:8px 18px;border-radius:8px;font-family:var(--fb);font-weight:600;font-size:.85rem;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .2s;}
+.btn-google:hover{background:var(--gold2);transform:translateY(-1px);}
+.btn-google svg{width:16px;height:16px;flex-shrink:0;}
+.user-pill{display:none;align-items:center;gap:8px;}
+.user-avatar{width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--navy);font-weight:700;font-size:.82rem;display:flex;align-items:center;justify-content:center;}
+.user-name{color:rgba(255,255,255,.75);font-size:.85rem;}
+.btn-signout{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.45);padding:4px 12px;border-radius:6px;font-size:.75rem;cursor:pointer;font-family:var(--fb);transition:all .2s;}
+.btn-signout:hover{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.7);}
+
+/* ── PAGES ── */
+.page{display:none;}
+.page.active{display:block;}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(140deg,var(--navy) 0%,var(--navy3) 55%,#0f3060 100%);min-height:88vh;display:flex;align-items:center;padding:4rem 2rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 68% 40%,rgba(201,168,76,.09) 0%,transparent 60%);}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;max-width:1100px;margin:0 auto;width:100%;position:relative;z-index:1;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(201,168,76,.14);border:1px solid rgba(201,168,76,.28);color:var(--gold2);padding:5px 14px;border-radius:100px;font-size:.78rem;font-weight:500;letter-spacing:.4px;margin-bottom:1.1rem;}
+.hero h1{font-family:var(--fh);color:var(--white);font-size:clamp(1.9rem,4vw,3rem);line-height:1.2;margin-bottom:1rem;}
+.hero h1 em{color:var(--gold);font-style:normal;}
+.hero p{color:rgba(255,255,255,.68);font-size:.98rem;line-height:1.75;margin-bottom:1.8rem;}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-primary{background:var(--gold);color:var(--navy);border:none;padding:12px 28px;border-radius:10px;font-family:var(--fb);font-weight:600;font-size:.95rem;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;}
+.btn-primary:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.3);}
+.btn-outline{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.28);padding:12px 28px;border-radius:10px;font-family:var(--fb);font-weight:500;font-size:.95rem;cursor:pointer;transition:all .2s;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.hero-card{background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:20px;padding:2rem;backdrop-filter:blur(8px);}
+.inst-avatar{width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:2rem;color:var(--navy);font-weight:700;margin-bottom:1rem;border:3px solid rgba(201,168,76,.35);}
+.inst-name{font-family:var(--fh);color:var(--white);font-size:1.35rem;margin-bottom:.25rem;}
+.inst-title{color:var(--gold2);font-size:.82rem;font-weight:500;margin-bottom:1.1rem;}
+.badges{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.4rem;}
+.badge{background:rgba(201,168,76,.11);border:1px solid rgba(201,168,76,.22);color:var(--gold3);padding:3px 11px;border-radius:100px;font-size:.72rem;font-weight:500;}
+.inst-stats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+.stat{background:rgba(255,255,255,.05);border-radius:10px;padding:.75rem;text-align:center;}
+.stat-num{color:var(--gold);font-size:1.3rem;font-weight:700;font-family:var(--fh);}
+.stat-label{color:rgba(255,255,255,.45);font-size:.7rem;margin-top:2px;}
+
+/* ── SECTION ── */
+.section{padding:4rem 2rem;max-width:1100px;margin:0 auto;}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;}
+.sec-head h2{font-family:var(--fh);font-size:2rem;color:var(--navy);}
+.sec-head a{color:var(--gold);font-size:.88rem;cursor:pointer;}
+
+/* ── COURSE CARDS ── */
+.courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.course-card{background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.course-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(10,22,40,.12);border-color:var(--gold);}
+.course-thumb{height:130px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;position:relative;}
+.course-thumb .mod-count{position:absolute;top:12px;right:12px;background:var(--navy);color:var(--gold);font-size:.68rem;font-weight:600;padding:3px 10px;border-radius:100px;}
+.course-body{padding:1.2rem;}
+.course-tag{font-size:.7rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+.course-title{font-family:var(--fh);font-size:1.05rem;color:var(--navy);margin-bottom:.45rem;line-height:1.3;}
+.course-desc{font-size:.83rem;color:var(--muted);line-height:1.65;margin-bottom:.9rem;}
+.course-foot{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:.75rem;}
+.course-lessons{font-size:.78rem;color:var(--muted);}
+.btn-enroll{background:var(--navy);color:var(--gold);border:none;padding:6px 16px;border-radius:8px;font-size:.78rem;font-weight:600;cursor:pointer;font-family:var(--fb);transition:all .2s;}
+.btn-enroll:hover{background:var(--navy3);}
+
+/* ── DASHBOARD ── */
+.dash-layout{display:grid;grid-template-columns:256px 1fr;min-height:calc(100vh - 64px);}
+.sidebar{background:var(--navy);padding:1.5rem 0;position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;}
+.sb-user{padding:0 1.2rem 1.4rem;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:1rem;}
+.sb-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:var(--navy);margin-bottom:.5rem;}
+.sb-name{color:var(--white);font-weight:600;font-size:.88rem;}
+.sb-email{color:rgba(255,255,255,.38);font-size:.73rem;word-break:break-all;}
+.sb-nav{padding:0 .6rem;}
+.sb-nav a{display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:10px;color:rgba(255,255,255,.6);font-size:.85rem;cursor:pointer;transition:all .15s;margin-bottom:2px;}
+.sb-nav a:hover,.sb-nav a.active{background:rgba(201,168,76,.12);color:var(--gold2);}
+.sb-label{padding:1rem 1.4rem .35rem;font-size:.65rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.22);}
+.dash-main{background:var(--cream);padding:2rem;}
+.dash-hdr{margin-bottom:2rem;}
+.dash-hdr h2{font-family:var(--fh);font-size:1.75rem;color:var(--navy);}
+.dash-hdr p{color:var(--muted);font-size:.88rem;margin-top:4px;}
+.stat-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1rem;margin-bottom:2rem;}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.1rem;}
+.sc-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:.7rem;}
+.sc-num{font-size:1.45rem;font-weight:700;color:var(--navy);font-family:var(--fh);}
+.sc-label{font-size:.75rem;color:var(--muted);margin-top:2px;}
+.enrolled-list{display:grid;gap:.9rem;}
+.enrolled-item{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.4rem;display:flex;align-items:center;gap:1.1rem;cursor:pointer;transition:all .2s;}
+.enrolled-item:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(201,168,76,.1);}
+.ei-icon{font-size:1.9rem;width:50px;text-align:center;flex-shrink:0;}
+.ei-info{flex:1;min-width:0;}
+.ei-title{font-weight:600;color:var(--navy);font-size:.92rem;margin-bottom:3px;}
+.ei-sub{font-size:.78rem;color:var(--muted);}
+.prog-wrap{background:#e8e4d4;border-radius:100px;height:4px;margin-top:7px;}
+.prog-bar{height:4px;border-radius:100px;background:linear-gradient(90deg,var(--gold),var(--gold2));}
+.ei-arrow{color:var(--gold);font-size:1.1rem;flex-shrink:0;}
+
+/* ── VIEWER ── */
+.viewer-layout{display:grid;grid-template-columns:290px 1fr;min-height:calc(100vh - 64px);}
+.cs-sidebar{background:var(--white);border-right:1px solid var(--border);overflow-y:auto;height:calc(100vh - 64px);position:sticky;top:64px;}
+.cs-hdr{background:var(--navy);padding:1.1rem 1.2rem;position:sticky;top:0;z-index:10;}
+.cs-back{color:rgba(255,255,255,.45);font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:4px;margin-bottom:.7rem;}
+.cs-back:hover{color:var(--gold);}
+.cs-title{color:var(--white);font-family:var(--fh);font-size:1rem;line-height:1.3;}
+.mod-section{border-bottom:1px solid var(--border);}
+.mod-head{padding:.85rem 1.1rem;font-weight:600;font-size:.8rem;color:var(--navy);cursor:pointer;display:flex;align-items:center;justify-content:space-between;background:#f5f2e8;user-select:none;}
+.mod-head:hover{background:#ede9d8;}
+.mod-lessons{padding:.25rem 0;}
+.lesson-row{padding:.65rem 1.1rem .65rem 1.8rem;font-size:.8rem;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .15s;border-left:2px solid transparent;}
+.lesson-row:hover{background:#faf8f2;color:var(--navy);}
+.lesson-row.active{background:#fdf8e8;color:var(--navy);border-left-color:var(--gold);font-weight:500;}
+.lesson-dot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0;}
+.lesson-row.active .lesson-dot{background:var(--gold);}
+.lesson-type-icon{margin-left:auto;font-size:.7rem;opacity:.5;}
+.content-area{background:var(--cream);padding:2rem;}
+.lesson-hdr{margin-bottom:1.2rem;}
+.lesson-hdr h3{font-family:var(--fh);font-size:1.35rem;color:var(--navy);}
+.lesson-hdr p{color:var(--muted);font-size:.83rem;margin-top:3px;}
+.content-tabs{display:flex;gap:.6rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+.tab-btn{padding:7px 18px;border-radius:8px;font-size:.82rem;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--muted);font-family:var(--fb);transition:all .15s;}
+.tab-btn.active{background:var(--navy);color:var(--gold);border-color:var(--navy);}
+.tab-btn:disabled{opacity:.35;cursor:not-allowed;}
+.video-wrap{background:var(--navy);border-radius:12px;overflow:hidden;margin-bottom:1.2rem;position:relative;padding-bottom:56.25%;display:none;}
+.video-wrap.show{display:block;}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.video-wrap .v-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:rgba(255,255,255,.4);gap:.8rem;font-size:.88rem;text-align:center;padding:2rem;}
+.v-placeholder .v-icon{font-size:2.8rem;}
+.pdf-wrap{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:none;flex-direction:column;}
+.pdf-wrap.show{display:flex;}
+.pdf-toolbar{background:#f5f2e8;border-bottom:1px solid var(--border);padding:.65rem 1.1rem;display:flex;align-items:center;justify-content:space-between;}
+.pdf-toolbar span{font-size:.8rem;color:var(--muted);}
+.btn-drive{background:var(--navy);color:var(--gold);border:none;padding:6px 14px;border-radius:6px;font-size:.77rem;font-weight:600;cursor:pointer;font-family:var(--fb);transition:all .2s;}
+.btn-drive:hover{background:var(--navy3);}
+.pdf-body{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;color:var(--muted);padding:4rem 2rem;}
+.pdf-body .pdf-icon{font-size:3rem;}
+.pdf-body p{font-size:.85rem;text-align:center;line-height:1.7;}
+.no-content{background:var(--white);border:1px dashed var(--border);border-radius:12px;padding:3rem 2rem;text-align:center;color:var(--muted);font-size:.88rem;}
+
+/* ── ADMIN ── */
+.admin-wrap{padding:2rem;max-width:960px;margin:0 auto;}
+.admin-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
+.admin-hdr h2{font-family:var(--fh);font-size:1.75rem;color:var(--navy);}
+.card-box{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1.5rem;}
+.card-box-hdr{padding:1rem 1.4rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-box-hdr h3{font-family:var(--fh);font-size:1.1rem;color:var(--navy);}
+table.tbl{width:100%;border-collapse:collapse;}
+table.tbl th{background:var(--navy);color:rgba(255,255,255,.65);padding:.75rem 1.1rem;text-align:left;font-size:.75rem;font-weight:500;letter-spacing:.4px;}
+table.tbl td{padding:.85rem 1.1rem;font-size:.83rem;color:var(--text);border-top:1px solid var(--border);}
+.pill{padding:3px 10px;border-radius:100px;font-size:.7rem;font-weight:600;}
+.pill-active{background:#e8f5ee;color:var(--success);}
+.pill-pending{background:#fef8e8;color:#8a6d00;}
+.btn-sm{background:var(--navy);color:var(--gold);border:none;padding:5px 12px;border-radius:6px;font-size:.73rem;font-weight:600;cursor:pointer;font-family:var(--fb);}
+.workflow-steps{padding:1.4rem;}
+.workflow-step{display:flex;gap:1rem;align-items:flex-start;padding:.75rem 0;border-bottom:1px solid var(--border);}
+.workflow-step:last-child{border-bottom:none;}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--gold);color:var(--navy);font-weight:700;font-size:.82rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-text{font-size:.85rem;color:var(--text);line-height:1.6;}
+.step-text strong{color:var(--navy);}
+
+/* ── FOOTER ── */
+footer{background:var(--navy);color:rgba(255,255,255,.38);text-align:center;padding:3rem 2rem 2rem;border-top:1px solid rgba(201,168,76,.12);}
+.footer-tagline{font-family:var(--fh);color:var(--gold);font-size:1.1rem;margin-bottom:.4rem;}
+.footer-sub{color:rgba(255,255,255,.3);font-size:.78rem;margin-bottom:2rem;}
+.social-row{display:flex;gap:1.5rem;justify-content:center;margin-bottom:2rem;flex-wrap:wrap;}
+.social-btn{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:.55rem;
+  text-decoration:none;
+  transition:transform .25s, filter .25s;
+}
+.social-btn:hover{transform:translateY(-5px);}
+.social-icon-wrap{
+  width:58px;
+  height:58px;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:box-shadow .25s, transform .25s;
+}
+.social-btn:hover .social-icon-wrap{
+  box-shadow:0 8px 28px rgba(0,0,0,.35);
+}
+.social-icon-wrap svg{width:30px;height:30px;}
+.social-label{font-size:.72rem;font-weight:500;letter-spacing:.4px;color:rgba(255,255,255,.45);transition:color .25s;}
+.social-btn:hover .social-label{color:rgba(255,255,255,.8);}
+/* individual platform colors */
+.si-fb{background:#1877F2;}
+.si-yt{background:#FF0000;}
+.si-tg{background:#26A5E4;}
+.si-wa{background:#25D366;}
+.footer-copy{font-size:.75rem;color:rgba(255,255,255,.22);border-top:1px solid rgba(255,255,255,.07);padding-top:1.5rem;margin-top:.5rem;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--navy);color:var(--gold);padding:.9rem 1.4rem;border-radius:12px;font-size:.85rem;border:1px solid rgba(201,168,76,.3);z-index:9999;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;max-width:320px;}
+.toast.show{opacity:1;transform:translateY(0);}
+
+/* ── LOGIN OVERLAY ── */
+.login-overlay{position:fixed;inset:0;background:rgba(10,22,40,.85);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.login-overlay.show{display:flex;}
+.login-card{background:var(--white);border-radius:20px;padding:2.5rem;max-width:400px;width:90%;text-align:center;}
+.login-card h2{font-family:var(--fh);color:var(--navy);font-size:1.6rem;margin-bottom:.5rem;}
+.login-card p{color:var(--muted);font-size:.88rem;margin-bottom:1.8rem;line-height:1.6;}
+.login-card .btn-google{justify-content:center;width:100%;font-size:.95rem;padding:12px;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-card{display:none;}
+  .dash-layout,.viewer-layout{grid-template-columns:1fr;}
+  .sidebar,.cs-sidebar{display:none;}
+  .social-icon-wrap{width:52px;height:52px;}
+  .social-icon-wrap svg{width:26px;height:26px;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN OVERLAY -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <div style="font-size:2.5rem;margin-bottom:.8rem;">✦</div>
+    <h2>Sign in to Continue</h2>
+    <p>Log in with your Google account to access course materials. Your email will be used to grant you PDF and video access.</p>
+    <button class="btn-google" onclick="signInWithGoogle()">
+      <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      Continue with Google
+    </button>
+    <button onclick="closeLoginOverlay()" style="margin-top:1rem;background:none;border:none;color:var(--muted);font-size:.83rem;cursor:pointer;font-family:var(--fb);">Cancel</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand" onclick="showPage('home')">
+    <div>
+      <div class="logo">✦ The Lazy Cadre</div>
+      <div class="tagline">BCS Learning Platform</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a onclick="showPage('home')">Home</a>
+    <a onclick="showPage('courses')">Courses</a>
+    <a id="nav-dash-link" onclick="requireAuth(()=>showPage('dashboard'))" style="display:none;">My Dashboard</a>
+    <a id="nav-admin-link" onclick="showPage('admin')" style="display:none;">⚙ Admin</a>
+    <button class="btn-google" id="navSignInBtn" onclick="openLoginOverlay()">
+      <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      Sign in with Google
+    </button>
+    <div class="user-pill" id="userPill">
+      <div class="user-avatar" id="navAvatar">K</div>
+      <span class="user-name" id="navName">Student</span>
+      <button class="btn-signout" onclick="signOut()">Sign out</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        
+        <h1>Study Smart.<br><em>Excel Fast.</em></h1>
+        <p>Structured handnotes, previous question solves & video lectures — from a cadre who's walked the exact same path.</p>
+        <div class="hero-cta">
+          <button class="btn-primary" onclick="showPage('courses')">Browse Courses →</button>
+          <button class="btn-outline" onclick="openLoginOverlay()">Join Free</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="inst-avatar">K</div>
+        <div class="inst-name">Khalid Mahmood Shovon</div>
+        <div class="inst-title">BCS Cadre (Audit) · 45th BCS</div>
+        <div class="badges">
+          <span class="badge">Ex-BUETian (EEE)</span>
+          <span class="badge">Ex-Cadet (FCC)</span>
+          <span class="badge">Ex Lecturer of EEE</span>
+          
+        </div>
+        <div class="inst-stats">
+          <div class="stat"><div class="stat-num">45th</div><div class="stat-label">BCS Batch</div></div>
+          <div class="stat"><div class="stat-num">EEE</div><div class="stat-label">BUET Grad</div></div>
+          <div class="stat"><div class="stat-num">FCC</div><div class="stat-label">Ex-Cadet</div></div>
+          <div class="stat"><div class="stat-num">2 Courses</div><div class="stat-label">(BCS Preli & BCS Written)</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section">
+    <div class="sec-head">
+      <h2>Featured Courses</h2>
+      <a onclick="showPage('courses')">All courses →</a>
+    </div>
+    <div class="courses-grid" id="homeCoursesGrid"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-tagline">✦ The Lazy Cadre</div>
+    <div class="footer-sub">BCS Learning Platform · cadre.bd</div>
+
+    <div class="social-row">
+
+      <!-- Facebook -->
+      <a class="social-btn" href="https://www.facebook.com/LazyCadre/" target="_blank" rel="noopener">
+        <div class="social-icon-wrap si-fb">
+          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.313 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+          </svg>
+        </div>
+        <span class="social-label">Facebook</span>
+      </a>
+
+      <!-- YouTube -->
+      <a class="social-btn" href="https://www.youtube.com/@TheLazyCadre" target="_blank" rel="noopener">
+        <div class="social-icon-wrap si-yt">
+          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </div>
+        <span class="social-label">YouTube</span>
+      </a>
+
+      <!-- Telegram -->
+      <a class="social-btn" href="https://t.me/LazyCadre" target="_blank" rel="noopener">
+        <div class="social-icon-wrap si-tg">
+          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+          </svg>
+        </div>
+        <span class="social-label">Telegram</span>
+      </a>
+
+      <!-- WhatsApp -->
+      <a class="social-btn" href="https://whatsapp.com/channel/0029VbCdHvFIN9ihZQXNhf16" target="_blank" rel="noopener">
+        <div class="social-icon-wrap si-wa">
+          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+          </svg>
+        </div>
+        <span class="social-label">WhatsApp</span>
+      </a>
+
+    </div>
+
+    <div class="footer-copy">© 2025 The Lazy Cadre · cadre.bd · All rights reserved</div>
+  </footer>
+</div>
+
+<!-- ═══════════════ COURSES PAGE ═══════════════ -->
+<div class="page" id="page-courses">
+  <div class="section" style="padding-top:3rem;">
+    <div class="sec-head"><h2>All Courses</h2></div>
+    <div class="courses-grid" id="allCoursesGrid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ DASHBOARD ═══════════════ -->
+<div class="page" id="page-dashboard">
+  <div class="dash-layout">
+    <div class="sidebar">
+      <div class="sb-user">
+        <div class="sb-avatar" id="sbAvatar">S</div>
+        <div class="sb-name" id="sbName">Student</div>
+        <div class="sb-email" id="sbEmail">student@gmail.com</div>
+      </div>
+      <div class="sb-nav">
+        <div class="sb-label">Menu</div>
+        <a class="active" onclick="showPage('dashboard')">📊 My Dashboard</a>
+        <a onclick="showPage('courses')">🔍 Browse Courses</a>
+        <div class="sb-label" style="margin-top:1rem;">Community</div>
+        <a href="https://www.youtube.com/@TheLazyCadre" target="_blank">▶ YouTube</a>
+        <a href="https://t.me/LazyCadre" target="_blank">✈ Telegram Group</a>
+        <a href="https://whatsapp.com/channel/0029VbCdHvFIN9ihZQXNhf16" target="_blank">📱 WhatsApp</a>
+      </div>
+    </div>
+    <div class="dash-main">
+      <div class="dash-hdr">
+        <h2 id="dashGreeting">Welcome back!</h2>
+        <p>Your Gmail has been registered. The instructor will grant you access to PDFs and videos shortly.</p>
+      </div>
+      <div class="stat-cards">
+        <div class="stat-card"><div class="sc-icon" style="background:#e8f0fe;">📚</div><div class="sc-num" id="enrollCount">1</div><div class="sc-label">Enrolled Courses</div></div>
+        <div class="stat-card"><div class="sc-icon" style="background:#fef8e8;">✅</div><div class="sc-num">0</div><div class="sc-label">Lessons Done</div></div>
+        <div class="stat-card"><div class="sc-icon" style="background:#e8f5ee;">📧</div><div class="sc-num" style="font-size:.85rem;margin-top:4px;" id="dashEmail">—</div><div class="sc-label">Registered Gmail</div></div>
+      </div>
+      <h3 style="font-family:var(--fh);color:var(--navy);margin-bottom:1rem;font-size:1.2rem;">Continue Learning</h3>
+      <div class="enrolled-list">
+        <div class="enrolled-item" onclick="openViewer(0)">
+          <div class="ei-icon">📋</div>
+          <div class="ei-info">
+            <div class="ei-title">BCS Written Preparation</div>
+            <div class="ei-sub">3 modules · 5 lessons · Click to continue</div>
+            <div class="prog-wrap"><div class="prog-bar" style="width:0%"></div></div>
+          </div>
+          <div class="ei-arrow">›</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ COURSE VIEWER ═══════════════ -->
+<div class="page" id="page-viewer">
+  <div class="viewer-layout">
+    <div class="cs-sidebar">
+      <div class="cs-hdr">
+        <div class="cs-back" onclick="showPage('dashboard')">← Back to Dashboard</div>
+        <div class="cs-title" id="viewerCourseTitle">BCS Written Preparation</div>
+      </div>
+      <div id="modulesContainer"></div>
+    </div>
+    <div class="content-area">
+      <div class="lesson-hdr">
+        <h3 id="lessonTitle">Select a lesson</h3>
+        <p id="lessonSub">Choose from the sidebar</p>
+      </div>
+      <div class="content-tabs" id="contentTabs" style="display:none;">
+        <button class="tab-btn active" id="tabVideo" onclick="switchTab('video')">▶ Video Lecture</button>
+        <button class="tab-btn" id="tabPdf" onclick="switchTab('pdf')">📄 PDF / Notes</button>
+      </div>
+      <!-- Video -->
+      <div class="video-wrap" id="videoWrap">
+        <div class="v-placeholder" id="videoPlaceholder">
+          <div class="v-icon">▶</div>
+          <div id="videoMsg">Access will be granted after enrollment approval.<br>Check your YouTube email invitation.</div>
+        </div>
+      </div>
+      <!-- PDF -->
+      <div class="pdf-wrap" id="pdfWrap">
+        <div class="pdf-toolbar">
+          <span id="pdfLabel">Study Material</span>
+          <button class="btn-drive" id="driveBtn" onclick="openDriveLink()">Open in Google Drive ↗</button>
+        </div>
+        <div class="pdf-body">
+          <div class="pdf-icon">📄</div>
+          <p>Click <strong>"Open in Google Drive"</strong> to view the PDF.<br>
+          <span style="font-size:.78rem;opacity:.65;">Make sure you're signed in with the Gmail you registered here.</span></p>
+        </div>
+      </div>
+      <!-- No content placeholder -->
+      <div class="no-content" id="noContent">
+        <div style="font-size:2.5rem;margin-bottom:.8rem;">📭</div>
+        <div>Content coming soon for this lesson.</div>
+        <div style="font-size:.78rem;margin-top:.4rem;opacity:.6;">Follow the Telegram & YouTube channel for updates.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ADMIN PAGE ═══════════════ -->
+<div class="page" id="page-admin">
+  <div class="admin-wrap">
+    <div class="admin-hdr">
+      <h2>Admin Panel</h2>
+      <span style="font-size:.82rem;color:var(--muted);">Logged in as Instructor</span>
+    </div>
+
+    <div class="card-box">
+      <div class="card-box-hdr">
+        <h3>Registered Students</h3>
+        <span id="studentCount" style="font-size:.82rem;color:var(--muted);">Loading…</span>
+      </div>
+      <table class="tbl">
+        <thead><tr><th>Name</th><th>Gmail</th><th>Registered</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody id="studentsTableBody">
+          <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;">No students yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-box">
+      <div class="card-box-hdr"><h3>Your Access Workflow</h3></div>
+      <div class="workflow-steps">
+        <div class="workflow-step"><div class="step-num">1</div><div class="step-text">Student signs in with Google → their <strong>Gmail is saved</strong> in Firebase automatically.</div></div>
+        <div class="workflow-step"><div class="step-num">2</div><div class="step-text">You see their Gmail here → go to <strong>Google Drive</strong> → share the PDF folder with their email.</div></div>
+        <div class="workflow-step"><div class="step-num">3</div><div class="step-text">Go to <strong>YouTube Studio</strong> → Video → Visibility → Add their Gmail to private video access.</div></div>
+        <div class="workflow-step"><div class="step-num">4</div><div class="step-text">Click <strong>"Activate"</strong> here to mark them as approved. They can now view content.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FIREBASE SDKs ═══════════════ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as fbSignOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs, updateDoc, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ── PASTE YOUR FIREBASE CONFIG HERE ──
+const firebaseConfig = {
+  apiKey:            "AIzaSyCty8wafYW2zv1zFRtkI65kYxHrovDRoT4",
+  authDomain:        "lazycadre-lms.firebaseapp.com",
+  projectId:         "lazycadre-lms",
+  storageBucket:     "lazycadre-lms.firebasestorage.app",
+  messagingSenderId: "522059838504",
+  appId:             "1:522059838504:web:ed7aa07b82b1970a73311d"
+};
+
+const ADMIN_EMAIL = "lazycadre@gmail.com";
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+// ── COURSE DATA ──────────────────────────────
+window.COURSES = [
+  {
+    id: "bcs-written",
+    icon: "📋",
+    tag: "BCS Written",
+    title: "BCS Written Preparation",
+    desc: "Previous question solves, handnotes, and video lectures covering all subjects of BCS Written exam.",
+    color: "#e8f0fe",
+    modules: [
+      {
+        title: "BCS Written Previous Question Solve",
+        lessons: [
+          {
+            title: "50th Written – Science Solve",
+            pdfUrl: "https://drive.google.com/file/d/1J_b1miy0RBqu9OdHNskixsEZFelBPTWE/view?usp=drive_link",
+            videoUrl: null
+          },
+          {
+            title: "50th Written – Math Solve",
+            pdfUrl: "https://drive.google.com/file/d/18VSIGADQ7kz3B2-sV7cSx-NCN_NMJmig/view?usp=drive_link",
+            videoUrl: null
+          }
+        ]
+      },
+      {
+        title: "BCS Written Handnote",
+        lessons: [
+          {
+            title: "চর্যাপদ",
+            pdfUrl: "https://drive.google.com/file/d/1XPHpxSjx4hEezRwUPfyewUeduMqgOuHh/view?usp=drive_link",
+            videoUrl: "https://www.youtube.com/embed/1v6S_vdl5A8"
+          },
+          {
+            title: "বাংলা সাহিত্যের মধ্যযুগ",
+            pdfUrl: "https://drive.google.com/file/d/1DrBO13LZnQdkf1t0olBQQHo13j1kRmnl/view?usp=drive_link",
+            videoUrl: "https://www.youtube.com/embed/jYyHS4vrQ0s"
+          }
+        ]
+      },
+      {
+        title: "Crack BCS Preli in 100 Days",
+        lessons: [
+          {
+            title: "Ethics",
+            pdfUrl: null,
+            videoUrl: "https://www.youtube.com/embed/9-UezoIdpoc"
+          }
+          // Add more lessons here later:
+          // { title: "New Lesson", pdfUrl: "DRIVE_LINK", videoUrl: "YOUTUBE_EMBED_LINK" }
+        ]
+      }
+    ]
+  }
+  // Add more courses here later:
+  // { id: "bcs-preli", icon: "📝", tag: "BCS Preli", title: "...", ... }
+];
+
+// ── STATE ────────────────────────────────────
+let currentUser  = null;
+let isAdmin      = false;
+let activeCourse = 0;
+let activeMod    = 0;
+let activeLesson = 0;
+let activeDriveUrl = null;
+
+// ── AUTH STATE ───────────────────────────────
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    currentUser = user;
+    isAdmin = (user.email === ADMIN_EMAIL);
+
+    if (!isAdmin) {
+      const ref = doc(db, "students", user.uid);
+      const snap = await getDoc(ref);
+      if (!snap.exists()) {
+        await setDoc(ref, {
+          name:       user.displayName,
+          email:      user.email,
+          photoURL:   user.photoURL,
+          uid:        user.uid,
+          status:     "pending",
+          registeredAt: serverTimestamp()
+        });
+      }
+    }
+    updateNavUI(user);
+  } else {
+    currentUser = null;
+    isAdmin     = false;
+    updateNavUI(null);
+  }
+});
+
+function updateNavUI(user) {
+  const signInBtn = document.getElementById("navSignInBtn");
+  const pill      = document.getElementById("userPill");
+  const dashLink  = document.getElementById("nav-dash-link");
+  const adminLink = document.getElementById("nav-admin-link");
+
+  if (user) {
+    signInBtn.style.display = "none";
+    pill.style.display      = "flex";
+    document.getElementById("navAvatar").textContent = user.displayName?.[0] || "S";
+    document.getElementById("navName").textContent   = user.displayName?.split(" ")[0] || "Student";
+    dashLink.style.display  = "block";
+    adminLink.style.display = isAdmin ? "block" : "none";
+    document.getElementById("sbAvatar").textContent = user.displayName?.[0] || "S";
+    document.getElementById("sbName").textContent   = user.displayName || "Student";
+    document.getElementById("sbEmail").textContent  = user.email;
+    document.getElementById("dashGreeting").textContent = `Welcome, ${user.displayName?.split(" ")[0] || "Student"}!`;
+    document.getElementById("dashEmail").textContent    = user.email;
+  } else {
+    signInBtn.style.display = "flex";
+    pill.style.display      = "none";
+    dashLink.style.display  = "none";
+    adminLink.style.display = "none";
+  }
+}
+
+// ── SIGN IN / OUT ────────────────────────────
+window.signInWithGoogle = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+    closeLoginOverlay();
+    showToast("Signed in! Your Gmail has been registered.");
+    showPage("dashboard");
+  } catch(e) {
+    showToast("Sign-in failed. Please try again.");
+    console.error(e);
+  }
+};
+
+window.signOut = async () => {
+  await fbSignOut(auth);
+  showPage("home");
+  showToast("Signed out successfully.");
+};
+
+// ── ADMIN: load students ─────────────────────
+window.loadStudents = async () => {
+  const snap  = await getDocs(collection(db, "students"));
+  const tbody = document.getElementById("studentsTableBody");
+  const count = document.getElementById("studentCount");
+  if (snap.empty) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;">No students registered yet.</td></tr>`;
+    count.textContent = "0 students";
+    return;
+  }
+  count.textContent = `${snap.size} student${snap.size>1?"s":""}`;
+  tbody.innerHTML = "";
+  snap.forEach(d => {
+    const s = d.data();
+    const date = s.registeredAt?.toDate?.()?.toLocaleDateString("en-BD") || "—";
+    tbody.innerHTML += `
+      <tr>
+        <td>${s.name||"—"}</td>
+        <td style="color:var(--navy);font-weight:500;">${s.email}</td>
+        <td>${date}</td>
+        <td><span class="pill ${s.status==="active"?"pill-active":"pill-pending"}">${s.status==="active"?"Active":"Pending"}</span></td>
+        <td>
+          ${s.status!=="active"
+            ? `<button class="btn-sm" onclick="activateStudent('${d.id}', this)">Activate</button>`
+            : `<span style="color:var(--success);font-size:.78rem;">✓ Done</span>`}
+        </td>
+      </tr>`;
+  });
+};
+
+window.activateStudent = async (uid, btn) => {
+  await updateDoc(doc(db, "students", uid), { status: "active" });
+  btn.closest("tr").querySelector(".pill").className = "pill pill-active";
+  btn.closest("tr").querySelector(".pill").textContent = "Active";
+  btn.replaceWith(document.createTextNode("✓ Done"));
+  showToast("Student activated!");
+};
+
+// ── VIEWER ──────────────────────────────────
+window.openViewer = (courseIdx) => {
+  if (!currentUser) { openLoginOverlay(); return; }
+  activeCourse = courseIdx;
+  const course = COURSES[courseIdx];
+  document.getElementById("viewerCourseTitle").textContent = course.title;
+  renderModules(course);
+  hideAllContent();
+  document.getElementById("lessonTitle").textContent = "Select a lesson from the sidebar";
+  document.getElementById("lessonSub").textContent   = "";
+  showPage("viewer");
+};
+
+function renderModules(course) {
+  const container = document.getElementById("modulesContainer");
+  container.innerHTML = course.modules.map((mod, mi) => `
+    <div class="mod-section">
+      <div class="mod-head" onclick="toggleMod(${mi})">
+        <span>Mod ${mi+1}: ${mod.title}</span>
+        <span id="modArrow${mi}">▾</span>
+      </div>
+      <div class="mod-lessons" id="modLessons${mi}">
+        ${mod.lessons.map((lesson, li) => {
+          const icon = lesson.pdfUrl && lesson.videoUrl ? "📹📄" : lesson.videoUrl ? "📹" : "📄";
+          return `<div class="lesson-row" id="lr${mi}_${li}" onclick="selectLesson(${mi},${li})">
+            <div class="lesson-dot"></div>
+            <span>${lesson.title}</span>
+            <span class="lesson-type-icon">${icon}</span>
+          </div>`;
+        }).join("")}
+      </div>
+    </div>`).join("");
+}
+
+window.toggleMod = (mi) => {
+  const el    = document.getElementById(`modLessons${mi}`);
+  const arrow = document.getElementById(`modArrow${mi}`);
+  const open  = el.style.display !== "none";
+  el.style.display    = open ? "none" : "";
+  arrow.textContent   = open ? "›" : "▾";
+};
+
+window.selectLesson = (mi, li) => {
+  document.querySelectorAll(".lesson-row").forEach(r => r.classList.remove("active"));
+  document.getElementById(`lr${mi}_${li}`)?.classList.add("active");
+  activeMod = mi; activeLesson = li;
+
+  const lesson = COURSES[activeCourse].modules[mi].lessons[li];
+  document.getElementById("lessonTitle").textContent = lesson.title;
+  document.getElementById("lessonSub").textContent   = `Module ${mi+1} · ${COURSES[activeCourse].modules[mi].title}`;
+
+  const hasPdf   = !!lesson.pdfUrl;
+  const hasVideo = !!lesson.videoUrl;
+  activeDriveUrl = lesson.pdfUrl;
+
+  const tabs = document.getElementById("contentTabs");
+  const tabV = document.getElementById("tabVideo");
+  const tabP = document.getElementById("tabPdf");
+
+  if (hasPdf || hasVideo) {
+    tabs.style.display = "flex";
+    tabV.disabled = !hasVideo;
+    tabP.disabled = !hasPdf;
+    if (hasVideo) {
+      switchTab("video", lesson.videoUrl);
+    } else {
+      switchTab("pdf");
+    }
+  } else {
+    tabs.style.display = "none";
+    hideAllContent();
+    document.getElementById("noContent").style.display = "block";
+  }
+};
+
+window.switchTab = (tab, videoUrl) => {
+  hideAllContent();
+  const tabV = document.getElementById("tabVideo");
+  const tabP = document.getElementById("tabPdf");
+
+  if (tab === "video") {
+    tabV.classList.add("active");
+    tabP.classList.remove("active");
+    const wrap = document.getElementById("videoWrap");
+    wrap.classList.add("show");
+    const lesson = COURSES[activeCourse].modules[activeMod].lessons[activeLesson];
+    const url    = videoUrl || lesson.videoUrl;
+    if (url) {
+      wrap.innerHTML = `<iframe src="${url}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
+    } else {
+      wrap.innerHTML = `<div class="v-placeholder"><div class="v-icon">▶</div><div>Video not available yet.</div></div>`;
+    }
+  } else {
+    tabP.classList.add("active");
+    tabV.classList.remove("active");
+    document.getElementById("pdfWrap").classList.add("show");
+    const lesson = COURSES[activeCourse].modules[activeMod].lessons[activeLesson];
+    document.getElementById("pdfLabel").textContent = lesson.title + " – PDF";
+    activeDriveUrl = lesson.pdfUrl;
+  }
+};
+
+window.openDriveLink = () => {
+  if (activeDriveUrl) window.open(activeDriveUrl, "_blank");
+  else showToast("No PDF link available for this lesson.");
+};
+
+function hideAllContent() {
+  document.getElementById("videoWrap").classList.remove("show");
+  document.getElementById("pdfWrap").classList.remove("show");
+  document.getElementById("noContent").style.display = "none";
+}
+
+// ── COURSE CARDS ─────────────────────────────
+window.renderCourseCards = (containerId, limit) => {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  const list = limit ? COURSES.slice(0, limit) : COURSES;
+  c.innerHTML = list.map((course, idx) => {
+    const total = course.modules.reduce((a,m)=>a+m.lessons.length, 0);
+    return `
+      <div class="course-card" onclick="openViewer(${idx})">
+        <div class="course-thumb" style="background:${course.color};">
+          <span>${course.icon}</span>
+          <span class="mod-count">${course.modules.length} modules</span>
+        </div>
+        <div class="course-body">
+          <div class="course-tag">${course.tag}</div>
+          <div class="course-title">${course.title}</div>
+          <div class="course-desc">${course.desc}</div>
+          <div class="course-foot">
+            <span class="course-lessons">${total} lessons</span>
+            <button class="btn-enroll">Start Learning</button>
+          </div>
+        </div>
+      </div>`;
+  }).join("");
+};
+
+// ── PAGE ROUTING ─────────────────────────────
+window.showPage = (name) => {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  const page = document.getElementById(`page-${name}`);
+  if (page) page.classList.add("active");
+  if (name === "home")    renderCourseCards("homeCoursesGrid", 3);
+  if (name === "courses") renderCourseCards("allCoursesGrid", null);
+  if (name === "admin" && isAdmin) loadStudents();
+  window.scrollTo(0,0);
+};
+
+window.requireAuth = (cb) => {
+  if (currentUser) cb();
+  else openLoginOverlay();
+};
+
+// ── LOGIN OVERLAY ────────────────────────────
+window.openLoginOverlay  = () => document.getElementById("loginOverlay").classList.add("show");
+window.closeLoginOverlay = () => document.getElementById("loginOverlay").classList.remove("show");
+
+// ── TOAST ────────────────────────────────────
+window.showToast = (msg) => {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3200);
+};
+
+// ── INIT ─────────────────────────────────────
+renderCourseCards("homeCoursesGrid", 3);
+
+</script>
+</body>
+</html>
