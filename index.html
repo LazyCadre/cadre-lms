@@ -37,6 +37,9 @@ nav{background:var(--navy);padding:0 2rem;display:flex;align-items:center;justif
 .nav-links a{color:rgba(255,255,255,.65);font-size:.88rem;cursor:pointer;transition:color .2s;}
 .nav-links a:hover{color:var(--gold);}
 
+/* ── MOBILE MENU BUTTON ── */
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--gold);font-size:1.5rem;cursor:pointer;padding:8px;line-height:1;}
+
 /* ── PAGES ── */
 .page{display:none;}
 .page.active{display:block;}
@@ -87,7 +90,7 @@ nav{background:var(--navy);padding:0 2rem;display:flex;align-items:center;justif
 .btn-enroll:hover{background:var(--navy3);}
 
 /* ── VIEWER ── */
-.viewer-layout{display:grid;grid-template-columns:290px 1fr;min-height:calc(100vh - 64px);}
+.viewer-layout{display:grid;grid-template-columns:290px 1fr;min-height:calc(100vh - 64px);position:relative;}
 .cs-sidebar{background:var(--white);border-right:1px solid var(--border);overflow-y:auto;height:calc(100vh - 64px);position:sticky;top:64px;}
 .cs-hdr{background:var(--navy);padding:1.1rem 1.2rem;position:sticky;top:0;z-index:10;}
 .cs-back{color:rgba(255,255,255,.45);font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:4px;margin-bottom:.7rem;}
@@ -126,6 +129,10 @@ nav{background:var(--navy);padding:0 2rem;display:flex;align-items:center;justif
 .pdf-body .pdf-icon{font-size:3rem;}
 .pdf-body p{font-size:.85rem;text-align:center;line-height:1.7;}
 .no-content{background:var(--white);border:1px dashed var(--border);border-radius:12px;padding:3rem 2rem;text-align:center;color:var(--muted);font-size:.88rem;}
+
+/* ── MOBILE SIDEBAR OVERLAY ── */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(10,22,40,.85);z-index:300;backdrop-filter:blur(4px);}
+.sidebar-overlay.active{display:block;}
 
 /* ── FOOTER ── */
 footer{background:var(--navy);color:rgba(255,255,255,.38);text-align:center;padding:3rem 2rem 2rem;border-top:1px solid rgba(201,168,76,.12);}
@@ -172,23 +179,41 @@ footer{background:var(--navy);color:rgba(255,255,255,.38);text-align:center;padd
   .hero-grid{grid-template-columns:1fr;}
   .hero-card{display:none;}
   .viewer-layout{grid-template-columns:1fr;}
-  .cs-sidebar{display:none;}
+  .cs-sidebar{
+    position:fixed;
+    left:-100%;
+    top:64px;
+    width:80%;
+    max-width:320px;
+    z-index:400;
+    transition:left .3s;
+    box-shadow:4px 0 12px rgba(0,0,0,.2);
+  }
+  .cs-sidebar.mobile-open{left:0;}
+  .mobile-menu-btn{display:block;}
   .social-icon-wrap{width:52px;height:52px;}
   .social-icon-wrap svg{width:26px;height:26px;}
+  .content-area{padding:1rem;}
 }
 </style>
 </head>
 <body>
+
+<!-- MOBILE SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-brand" onclick="showPage('home')">
-    <div>
-      <div class="logo">✦ The Lazy Cadre</div>
-      <div class="tagline">BCS Learning Platform</div>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileSidebar()" style="display:none;">☰</button>
+    <div class="nav-brand" onclick="showPage('home')">
+      <div>
+        <div class="logo">✦ The Lazy Cadre</div>
+        <div class="tagline">BCS Learning Platform</div>
+      </div>
     </div>
   </div>
   <div class="nav-links">
@@ -302,7 +327,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.38);text-align:center;padd
 <!-- ═══════════════ COURSE VIEWER ═══════════════ -->
 <div class="page" id="page-viewer">
   <div class="viewer-layout">
-    <div class="cs-sidebar">
+    <div class="cs-sidebar" id="courseSidebar">
       <div class="cs-hdr">
         <div class="cs-back" onclick="showPage('home')">← Back to Home</div>
         <div class="cs-title" id="viewerCourseTitle">BCS Written Preparation</div>
@@ -412,6 +437,21 @@ let activeMod    = 0;
 let activeLesson = 0;
 let activeDriveUrl = null;
 
+// ── MOBILE SIDEBAR FUNCTIONS ─────────────────
+window.toggleMobileSidebar = () => {
+  const sidebar = document.getElementById("courseSidebar");
+  const overlay = document.getElementById("sidebarOverlay");
+  sidebar.classList.toggle("mobile-open");
+  overlay.classList.toggle("active");
+};
+
+window.closeMobileSidebar = () => {
+  const sidebar = document.getElementById("courseSidebar");
+  const overlay = document.getElementById("sidebarOverlay");
+  sidebar.classList.remove("mobile-open");
+  overlay.classList.remove("active");
+};
+
 // ── VIEWER ──────────────────────────────────
 window.openViewer = (courseIdx) => {
   activeCourse = courseIdx;
@@ -422,6 +462,8 @@ window.openViewer = (courseIdx) => {
   document.getElementById("lessonTitle").textContent = "Select a lesson from the sidebar";
   document.getElementById("lessonSub").textContent   = "";
   showPage("viewer");
+  // Show mobile menu button
+  document.getElementById("mobileMenuBtn").style.display = "block";
 };
 
 function renderModules(course) {
@@ -483,6 +525,11 @@ window.selectLesson = (mi, li) => {
     tabs.style.display = "none";
     hideAllContent();
     document.getElementById("noContent").style.display = "block";
+  }
+  
+  // Close mobile sidebar after selecting lesson
+  if (window.innerWidth <= 768) {
+    closeMobileSidebar();
   }
 };
 
@@ -557,6 +604,13 @@ window.showPage = (name) => {
   if (page) page.classList.add("active");
   if (name === "home")    renderCourseCards("homeCoursesGrid", 3);
   if (name === "courses") renderCourseCards("allCoursesGrid", null);
+  
+  // Hide mobile menu button on non-viewer pages
+  if (name !== "viewer") {
+    document.getElementById("mobileMenuBtn").style.display = "none";
+    closeMobileSidebar();
+  }
+  
   window.scrollTo(0,0);
 };
 
