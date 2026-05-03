@@ -30,15 +30,14 @@ a{text-decoration:none;color:inherit;}
 
 /* ── NAV ── */
 nav{background:var(--navy);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:200;box-shadow:0 2px 24px rgba(0,0,0,.35);}
+.nav-left{display:flex;align-items:center;gap:1rem;}
 .nav-brand{display:flex;align-items:center;gap:10px;cursor:pointer;}
 .nav-brand .logo{font-family:var(--fh);color:var(--gold);font-size:1.25rem;line-height:1;}
 .nav-brand .tagline{color:rgba(255,255,255,.45);font-size:.72rem;letter-spacing:.8px;margin-top:2px;}
 .nav-links{display:flex;gap:1.2rem;align-items:center;}
 .nav-links a{color:rgba(255,255,255,.65);font-size:.88rem;cursor:pointer;transition:color .2s;}
 .nav-links a:hover{color:var(--gold);}
-
-/* ── MOBILE MENU BUTTON ── */
-.mobile-menu-btn{display:none;background:none;border:none;color:var(--gold);font-size:1.5rem;cursor:pointer;padding:8px;line-height:1;}
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--gold);font-size:1.6rem;cursor:pointer;padding:6px;line-height:1;}
 
 /* ── PAGES ── */
 .page{display:none;}
@@ -48,15 +47,12 @@ nav{background:var(--navy);padding:0 2rem;display:flex;align-items:center;justif
 .hero{background:linear-gradient(140deg,var(--navy) 0%,var(--navy3) 55%,#0f3060 100%);min-height:88vh;display:flex;align-items:center;padding:4rem 2rem;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 68% 40%,rgba(201,168,76,.09) 0%,transparent 60%);}
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;max-width:1100px;margin:0 auto;width:100%;position:relative;z-index:1;}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(201,168,76,.14);border:1px solid rgba(201,168,76,.28);color:var(--gold2);padding:5px 14px;border-radius:100px;font-size:.78rem;font-weight:500;letter-spacing:.4px;margin-bottom:1.1rem;}
 .hero h1{font-family:var(--fh);color:var(--white);font-size:clamp(1.9rem,4vw,3rem);line-height:1.2;margin-bottom:1rem;}
 .hero h1 em{color:var(--gold);font-style:normal;}
 .hero p{color:rgba(255,255,255,.68);font-size:.98rem;line-height:1.75;margin-bottom:1.8rem;}
 .hero-cta{display:flex;gap:1rem;flex-wrap:wrap;}
 .btn-primary{background:var(--gold);color:var(--navy);border:none;padding:12px 28px;border-radius:10px;font-family:var(--fb);font-weight:600;font-size:.95rem;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;}
 .btn-primary:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.3);}
-.btn-outline{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.28);padding:12px 28px;border-radius:10px;font-family:var(--fb);font-weight:500;font-size:.95rem;cursor:pointer;transition:all .2s;}
-.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
 .hero-card{background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);border-radius:20px;padding:2rem;backdrop-filter:blur(8px);}
 .inst-avatar{width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:2rem;color:var(--navy);font-weight:700;margin-bottom:1rem;border:3px solid rgba(201,168,76,.35);}
 .inst-name{font-family:var(--fh);color:var(--white);font-size:1.35rem;margin-bottom:.25rem;}
@@ -139,31 +135,13 @@ footer{background:var(--navy);color:rgba(255,255,255,.38);text-align:center;padd
 .footer-tagline{font-family:var(--fh);color:var(--gold);font-size:1.1rem;margin-bottom:.4rem;}
 .footer-sub{color:rgba(255,255,255,.3);font-size:.78rem;margin-bottom:2rem;}
 .social-row{display:flex;gap:1.5rem;justify-content:center;margin-bottom:2rem;flex-wrap:wrap;}
-.social-btn{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:.55rem;
-  text-decoration:none;
-  transition:transform .25s, filter .25s;
-}
+.social-btn{display:flex;flex-direction:column;align-items:center;gap:.55rem;text-decoration:none;transition:transform .25s;}
 .social-btn:hover{transform:translateY(-5px);}
-.social-icon-wrap{
-  width:58px;
-  height:58px;
-  border-radius:16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:box-shadow .25s, transform .25s;
-}
-.social-btn:hover .social-icon-wrap{
-  box-shadow:0 8px 28px rgba(0,0,0,.35);
-}
+.social-icon-wrap{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;transition:box-shadow .25s;}
+.social-btn:hover .social-icon-wrap{box-shadow:0 8px 28px rgba(0,0,0,.35);}
 .social-icon-wrap svg{width:30px;height:30px;}
 .social-label{font-size:.72rem;font-weight:500;letter-spacing:.4px;color:rgba(255,255,255,.45);transition:color .25s;}
 .social-btn:hover .social-label{color:rgba(255,255,255,.8);}
-/* individual platform colors */
 .si-fb{background:#1877F2;}
 .si-yt{background:#FF0000;}
 .si-tg{background:#26A5E4;}
@@ -176,24 +154,26 @@ footer{background:var(--navy);color:rgba(255,255,255,.38);text-align:center;padd
 
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
-  .hero-grid{grid-template-columns:1fr;}
-  .hero-card{display:none;}
+  .hero{padding:2.5rem 1.2rem;min-height:auto;}
+  .hero-grid{grid-template-columns:1fr;gap:2rem;}
+  .hero-card{display:block;}
   .viewer-layout{grid-template-columns:1fr;}
   .cs-sidebar{
     position:fixed;
     left:-100%;
     top:64px;
-    width:80%;
+    width:82%;
     max-width:320px;
     z-index:400;
-    transition:left .3s;
-    box-shadow:4px 0 12px rgba(0,0,0,.2);
+    height:calc(100vh - 64px);
+    transition:left .3s ease;
+    box-shadow:4px 0 20px rgba(0,0,0,.3);
   }
   .cs-sidebar.mobile-open{left:0;}
-  .mobile-menu-btn{display:block;}
-  .social-icon-wrap{width:52px;height:52px;}
-  .social-icon-wrap svg{width:26px;height:26px;}
+  .mobile-menu-btn{display:flex !important;align-items:center;justify-content:center;}
   .content-area{padding:1rem;}
+  .social-icon-wrap{width:50px;height:50px;}
+  .social-icon-wrap svg{width:24px;height:24px;}
 }
 </style>
 </head>
@@ -207,7 +187,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.38);text-align:center;padd
 
 <!-- NAV -->
 <nav>
-  <div style="display:flex;align-items:center;gap:1rem;">
+  <div class="nav-left">
     <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileSidebar()" style="display:none;">☰</button>
     <div class="nav-brand" onclick="showPage('home')">
       <div>
@@ -227,12 +207,10 @@ footer{background:var(--navy);color:rgba(255,255,255,.38);text-align:center;padd
   <section class="hero">
     <div class="hero-grid">
       <div>
-        
         <h1>Study Smart.<br><em>Excel Fast.</em></h1>
         <p>Structured handnotes, previous question solves & video lectures — from a cadre who's walked the exact same path.</p>
         <div class="hero-cta">
           <button class="btn-primary" onclick="showPage('courses')">Browse Courses →</button>
-          <button class="btn-outline" onclick="openViewer(0)">Start Learning Free</button>
         </div>
       </div>
       <div class="hero-card">
@@ -243,7 +221,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.38);text-align:center;padd
           <span class="badge">Ex-BUETian (EEE)</span>
           <span class="badge">Ex-Cadet (FCC)</span>
           <span class="badge">Ex Lecturer of EEE</span>
-          
         </div>
         <div class="inst-stats">
           <div class="stat"><div class="stat-num">45th</div><div class="stat-label">BCS Batch</div></div>
@@ -263,55 +240,35 @@ footer{background:var(--navy);color:rgba(255,255,255,.38);text-align:center;padd
     <div class="courses-grid" id="homeCoursesGrid"></div>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-tagline">✦ The Lazy Cadre</div>
     <div class="footer-sub">BCS Learning Platform · cadre.bd</div>
-
     <div class="social-row">
-
-      <!-- Facebook -->
       <a class="social-btn" href="https://www.facebook.com/LazyCadre/" target="_blank" rel="noopener">
         <div class="social-icon-wrap si-fb">
-          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-            <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.313 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="white"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.313 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
         </div>
         <span class="social-label">Facebook</span>
       </a>
-
-      <!-- YouTube -->
       <a class="social-btn" href="https://www.youtube.com/@TheLazyCadre" target="_blank" rel="noopener">
         <div class="social-icon-wrap si-yt">
-          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
         </div>
         <span class="social-label">YouTube</span>
       </a>
-
-      <!-- Telegram -->
       <a class="social-btn" href="https://t.me/LazyCadre" target="_blank" rel="noopener">
         <div class="social-icon-wrap si-tg">
-          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
         </div>
         <span class="social-label">Telegram</span>
       </a>
-
-      <!-- WhatsApp -->
       <a class="social-btn" href="https://whatsapp.com/channel/0029VbCdHvFIN9ihZQXNhf16" target="_blank" rel="noopener">
         <div class="social-icon-wrap si-wa">
-          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
         </div>
         <span class="social-label">WhatsApp</span>
       </a>
-
     </div>
-
     <div class="footer-copy">© 2025 The Lazy Cadre · cadre.bd · All rights reserved</div>
   </footer>
 </div>
@@ -330,39 +287,31 @@ footer{background:var(--navy);color:rgba(255,255,255,.38);text-align:center;padd
     <div class="cs-sidebar" id="courseSidebar">
       <div class="cs-hdr">
         <div class="cs-back" onclick="showPage('home')">← Back to Home</div>
-        <div class="cs-title" id="viewerCourseTitle">BCS Written Preparation</div>
+        <div class="cs-title" id="viewerCourseTitle"></div>
       </div>
       <div id="modulesContainer"></div>
     </div>
     <div class="content-area">
       <div class="lesson-hdr">
-        <h3 id="lessonTitle">Select a lesson</h3>
-        <p id="lessonSub">Choose from the sidebar</p>
+        <h3 id="lessonTitle">—</h3>
+        <p id="lessonSub"></p>
       </div>
       <div class="content-tabs" id="contentTabs" style="display:none;">
         <button class="tab-btn active" id="tabVideo" onclick="switchTab('video')">▶ Video Lecture</button>
         <button class="tab-btn" id="tabPdf" onclick="switchTab('pdf')">📄 PDF / Notes</button>
       </div>
-      <!-- Video -->
-      <div class="video-wrap" id="videoWrap">
-        <div class="v-placeholder" id="videoPlaceholder">
-          <div class="v-icon">▶</div>
-          <div id="videoMsg">Video content not available for this lesson</div>
-        </div>
-      </div>
-      <!-- PDF -->
+      <div class="video-wrap" id="videoWrap"></div>
       <div class="pdf-wrap" id="pdfWrap">
         <div class="pdf-toolbar">
           <span id="pdfLabel">Study Material</span>
-          <button class="btn-drive" id="driveBtn" onclick="openDriveLink()">Open in Google Drive ↗</button>
+          <button class="btn-drive" onclick="openDriveLink()">Open in Google Drive ↗</button>
         </div>
         <div class="pdf-body">
           <div class="pdf-icon">📄</div>
           <p>Click <strong>"Open in Google Drive"</strong> to view the PDF.</p>
         </div>
       </div>
-      <!-- No content placeholder -->
-      <div class="no-content" id="noContent">
+      <div class="no-content" id="noContent" style="display:none;">
         <div style="font-size:2.5rem;margin-bottom:.8rem;">📭</div>
         <div>Content coming soon for this lesson.</div>
         <div style="font-size:.78rem;margin-top:.4rem;opacity:.6;">Follow the Telegram & YouTube channel for updates.</div>
@@ -375,12 +324,14 @@ footer{background:var(--navy);color:rgba(255,255,255,.38);text-align:center;padd
 <script>
 // ── COURSE DATA ──────────────────────────────
 window.COURSES = [
+
+  // ── COURSE 1: BCS WRITTEN ──
   {
     id: "bcs-written",
     icon: "📋",
     tag: "BCS Written",
-    title: "BCS Written Preparation",
-    desc: "Previous question solves, handnotes, and video lectures covering all subjects of BCS Written exam.",
+    title: "BCS Written Course",
+    desc: "Previous question solves & handnotes covering all subjects of the BCS Written exam.",
     color: "#e8f0fe",
     modules: [
       {
@@ -412,7 +363,21 @@ window.COURSES = [
             videoUrl: "https://www.youtube.com/embed/jYyHS4vrQ0s"
           }
         ]
-      },
+      }
+      // Add more Written modules here:
+      // { title: "New Module", lessons: [ { title: "...", pdfUrl: "...", videoUrl: "..." } ] }
+    ]
+  },
+
+  // ── COURSE 2: BCS PRELI ──
+  {
+    id: "bcs-preli",
+    icon: "📝",
+    tag: "BCS Preli",
+    title: "BCS Preli Course",
+    desc: "Structured video lectures and notes to crack the BCS Preliminary exam in 100 days.",
+    color: "#fef3e8",
+    modules: [
       {
         title: "Crack BCS Preli in 100 Days",
         lessons: [
@@ -421,54 +386,44 @@ window.COURSES = [
             pdfUrl: null,
             videoUrl: "https://www.youtube.com/embed/9-UezoIdpoc"
           }
-          // Add more lessons here later:
+          // Add more Preli lessons here:
           // { title: "New Lesson", pdfUrl: "DRIVE_LINK", videoUrl: "YOUTUBE_EMBED_LINK" }
         ]
       }
+      // Add more Preli modules here:
+      // { title: "New Module", lessons: [ { title: "...", pdfUrl: "...", videoUrl: "..." } ] }
     ]
   }
-  // Add more courses here later:
-  // { id: "bcs-preli", icon: "📝", tag: "BCS Preli", title: "...", ... }
+
 ];
 
 // ── STATE ────────────────────────────────────
-let activeCourse = 0;
-let activeMod    = 0;
-let activeLesson = 0;
-let activeDriveUrl = null;
+let activeCourse = 0, activeMod = 0, activeLesson = 0, activeDriveUrl = null;
 
-// ── MOBILE SIDEBAR FUNCTIONS ─────────────────
+// ── MOBILE SIDEBAR ───────────────────────────
 window.toggleMobileSidebar = () => {
-  const sidebar = document.getElementById("courseSidebar");
-  const overlay = document.getElementById("sidebarOverlay");
-  sidebar.classList.toggle("mobile-open");
-  overlay.classList.toggle("active");
+  document.getElementById("courseSidebar").classList.toggle("mobile-open");
+  document.getElementById("sidebarOverlay").classList.toggle("active");
 };
-
 window.closeMobileSidebar = () => {
-  const sidebar = document.getElementById("courseSidebar");
-  const overlay = document.getElementById("sidebarOverlay");
-  sidebar.classList.remove("mobile-open");
-  overlay.classList.remove("active");
+  document.getElementById("courseSidebar").classList.remove("mobile-open");
+  document.getElementById("sidebarOverlay").classList.remove("active");
 };
 
-// ── VIEWER ──────────────────────────────────
+// ── OPEN VIEWER ──────────────────────────────
 window.openViewer = (courseIdx) => {
   activeCourse = courseIdx;
   const course = COURSES[courseIdx];
   document.getElementById("viewerCourseTitle").textContent = course.title;
   renderModules(course);
-  hideAllContent();
-  document.getElementById("lessonTitle").textContent = "Select a lesson from the sidebar";
-  document.getElementById("lessonSub").textContent   = "";
   showPage("viewer");
-  // Show mobile menu button
-  document.getElementById("mobileMenuBtn").style.display = "block";
+  document.getElementById("mobileMenuBtn").style.display = "flex";
+  // Auto-select first lesson of first module
+  selectLesson(0, 0);
 };
 
 function renderModules(course) {
-  const container = document.getElementById("modulesContainer");
-  container.innerHTML = course.modules.map((mod, mi) => `
+  document.getElementById("modulesContainer").innerHTML = course.modules.map((mod, mi) => `
     <div class="mod-section">
       <div class="mod-head" onclick="toggleMod(${mi})">
         <span>Mod ${mi+1}: ${mod.title}</span>
@@ -488,11 +443,11 @@ function renderModules(course) {
 }
 
 window.toggleMod = (mi) => {
-  const el    = document.getElementById(`modLessons${mi}`);
+  const el = document.getElementById(`modLessons${mi}`);
   const arrow = document.getElementById(`modArrow${mi}`);
-  const open  = el.style.display !== "none";
-  el.style.display    = open ? "none" : "";
-  arrow.textContent   = open ? "›" : "▾";
+  const open = el.style.display !== "none";
+  el.style.display = open ? "none" : "";
+  arrow.textContent = open ? "›" : "▾";
 };
 
 window.selectLesson = (mi, li) => {
@@ -504,55 +459,38 @@ window.selectLesson = (mi, li) => {
   document.getElementById("lessonTitle").textContent = lesson.title;
   document.getElementById("lessonSub").textContent   = `Module ${mi+1} · ${COURSES[activeCourse].modules[mi].title}`;
 
-  const hasPdf   = !!lesson.pdfUrl;
-  const hasVideo = !!lesson.videoUrl;
+  const hasPdf = !!lesson.pdfUrl, hasVideo = !!lesson.videoUrl;
   activeDriveUrl = lesson.pdfUrl;
 
-  const tabs = document.getElementById("contentTabs");
-  const tabV = document.getElementById("tabVideo");
-  const tabP = document.getElementById("tabPdf");
+  document.getElementById("tabVideo").disabled = !hasVideo;
+  document.getElementById("tabPdf").disabled   = !hasPdf;
 
   if (hasPdf || hasVideo) {
-    tabs.style.display = "flex";
-    tabV.disabled = !hasVideo;
-    tabP.disabled = !hasPdf;
-    if (hasVideo) {
-      switchTab("video", lesson.videoUrl);
-    } else {
-      switchTab("pdf");
-    }
+    document.getElementById("contentTabs").style.display = "flex";
+    switchTab(hasVideo ? "video" : "pdf", lesson.videoUrl);
   } else {
-    tabs.style.display = "none";
+    document.getElementById("contentTabs").style.display = "none";
     hideAllContent();
     document.getElementById("noContent").style.display = "block";
   }
-  
-  // Close mobile sidebar after selecting lesson
-  if (window.innerWidth <= 768) {
-    closeMobileSidebar();
-  }
+
+  if (window.innerWidth <= 768) closeMobileSidebar();
 };
 
 window.switchTab = (tab, videoUrl) => {
   hideAllContent();
   const tabV = document.getElementById("tabVideo");
   const tabP = document.getElementById("tabPdf");
-
   if (tab === "video") {
-    tabV.classList.add("active");
-    tabP.classList.remove("active");
+    tabV.classList.add("active"); tabP.classList.remove("active");
     const wrap = document.getElementById("videoWrap");
     wrap.classList.add("show");
-    const lesson = COURSES[activeCourse].modules[activeMod].lessons[activeLesson];
-    const url    = videoUrl || lesson.videoUrl;
-    if (url) {
-      wrap.innerHTML = `<iframe src="${url}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
-    } else {
-      wrap.innerHTML = `<div class="v-placeholder"><div class="v-icon">▶</div><div>Video not available yet.</div></div>`;
-    }
+    const url = videoUrl || COURSES[activeCourse].modules[activeMod].lessons[activeLesson].videoUrl;
+    wrap.innerHTML = url
+      ? `<iframe src="${url}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`
+      : `<div class="v-placeholder"><div class="v-icon">▶</div><div>Video not available yet.</div></div>`;
   } else {
-    tabP.classList.add("active");
-    tabV.classList.remove("active");
+    tabP.classList.add("active"); tabV.classList.remove("active");
     document.getElementById("pdfWrap").classList.add("show");
     const lesson = COURSES[activeCourse].modules[activeMod].lessons[activeLesson];
     document.getElementById("pdfLabel").textContent = lesson.title + " – PDF";
@@ -577,19 +515,19 @@ window.renderCourseCards = (containerId, limit) => {
   if (!c) return;
   const list = limit ? COURSES.slice(0, limit) : COURSES;
   c.innerHTML = list.map((course, idx) => {
-    const total = course.modules.reduce((a,m)=>a+m.lessons.length, 0);
+    const total = course.modules.reduce((a,m) => a + m.lessons.length, 0);
     return `
       <div class="course-card" onclick="openViewer(${idx})">
         <div class="course-thumb" style="background:${course.color};">
           <span>${course.icon}</span>
-          <span class="mod-count">${course.modules.length} modules</span>
+          <span class="mod-count">${course.modules.length} module${course.modules.length > 1 ? 's' : ''}</span>
         </div>
         <div class="course-body">
           <div class="course-tag">${course.tag}</div>
           <div class="course-title">${course.title}</div>
           <div class="course-desc">${course.desc}</div>
           <div class="course-foot">
-            <span class="course-lessons">${total} lessons</span>
+            <span class="course-lessons">${total} lesson${total > 1 ? 's' : ''}</span>
             <button class="btn-enroll">Start Learning</button>
           </div>
         </div>
@@ -600,18 +538,14 @@ window.renderCourseCards = (containerId, limit) => {
 // ── PAGE ROUTING ─────────────────────────────
 window.showPage = (name) => {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  const page = document.getElementById(`page-${name}`);
-  if (page) page.classList.add("active");
-  if (name === "home")    renderCourseCards("homeCoursesGrid", 3);
+  document.getElementById(`page-${name}`)?.classList.add("active");
+  if (name === "home")    renderCourseCards("homeCoursesGrid", 2); // show both courses on home
   if (name === "courses") renderCourseCards("allCoursesGrid", null);
-  
-  // Hide mobile menu button on non-viewer pages
   if (name !== "viewer") {
     document.getElementById("mobileMenuBtn").style.display = "none";
     closeMobileSidebar();
   }
-  
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
 };
 
 // ── TOAST ────────────────────────────────────
@@ -623,8 +557,7 @@ window.showToast = (msg) => {
 };
 
 // ── INIT ─────────────────────────────────────
-renderCourseCards("homeCoursesGrid", 3);
-
+renderCourseCards("homeCoursesGrid", 2);
 </script>
 </body>
 </html>
